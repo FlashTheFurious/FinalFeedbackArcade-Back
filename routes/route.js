@@ -13,7 +13,7 @@ router.get('/games/:id', gamesController.getSingleGame);
 router.post('/games', gamesController.addGame);
 router.put('/games/:id', gamesController.addGameReview);
 router.delete('/games/:id', gamesController.deleteGame);
-router.get('/games/search', gamesController.searchGames);
+//router.get('/games/search', gamesController.searchGames);
 router.post('/user/find', userController.validateUser);
 router.put('/user/change-password', userController.updatePassword);
 
