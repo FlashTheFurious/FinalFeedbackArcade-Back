@@ -8,7 +8,7 @@ const helmet = require('helmet');
 const session = require('express-session');
 const RedisStore = require('connect-redis').default;
 const bodyParser = require('body-parser');
-const port = process.env.PORT || process.env.NODE_PORT || 3000;
+const port = process.env.PORT || process.env.NODE_PORT || 5000;
 const dbURI = process.env.MONGODB_URI;
 
 
