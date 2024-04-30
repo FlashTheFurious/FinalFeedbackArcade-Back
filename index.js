@@ -1,5 +1,5 @@
 require('dotenv').config();
-var express = require("express");
+const express = require("express");
 const redis = require('redis');
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -13,6 +13,24 @@ const port = 5020;
 // const dbURI = process.env.MONGODB_URI;
 const dbURI = "mongodb+srv://tarnav:Flashtf@simplemodel.ubnc1gf.mongodb.net/FeedbackArcade";
 
+//Handlebars server implementation
+app.use(cors({
+    origin: 'http://feedback-arcade.s3-website.us-east-2.amazonaws.com'  
+}));
+
+// Setting up Handlebars as the view engine
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
+app.set('views', './views');
+
+// Serve static files from public directory ( Only being used for handlebars )
+app.use(express.static('public'));
+
+app.get('/banner', (req, res) => {
+    res.render('bannerAd', {
+        imageSrc: '/banner.jpeg' 
+    });
+});
 
 
 const userRoutes = require("./routes/route");
