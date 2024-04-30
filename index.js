@@ -38,6 +38,16 @@ redisClient.connect().then(() => {
 
     app.use(cors());
 
+    // Another attempt to solve CORS for the static image file
+    const setCustomCacheControl = (res, path) => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin'); // Allow resources to be accessed by different origins
+    }
+    
+    app.use('/static', express.static('public', {
+        setHeaders: setCustomCacheControl
+    }));
+    
     // Middlewares
     app.use(helmet());
     app.use(compression());
@@ -57,6 +67,9 @@ redisClient.connect().then(() => {
     app.engine('handlebars', engine({ defaultLayout: '' }));
     app.set('view engine', 'handlebars');
     app.set('views', path.join(__dirname, 'views'));
+
+    // Static files
+    app.use('/static', express.static('public'));
 
     // Serve static files
     app.use(express.static(path.join(__dirname, 'public')));
