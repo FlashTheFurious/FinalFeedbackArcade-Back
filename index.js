@@ -8,41 +8,12 @@ const helmet = require('helmet');
 const session = require('express-session');
 const RedisStore = require('connect-redis').default;
 const bodyParser = require('body-parser');
+const path = require('path');
 // const port = process.env.PORT || process.env.NODE_PORT || 5020;
 const port = 5020;
 // const dbURI = process.env.MONGODB_URI;
 const dbURI = "mongodb+srv://tarnav:Flashtf@simplemodel.ubnc1gf.mongodb.net/FeedbackArcade";
-
-const exphbs = require('express-handlebars');
-
-// Initialize the express application
-const app = express();
-
-// Handlebars server implementation
-app.use(cors({
-    origin: 'http://feedback-arcade.s3-website.us-east-2.amazonaws.com'  
-}));
-
-// Setting up Handlebars as the view engine
-app.engine('handlebars', exphbs());
-app.set('view engine', 'handlebars');
-app.set('views', './views');
-
-// Serve static files from public directory (only being used for handlebars)
-app.use(express.static('public'));
-
-app.get('/banner', (req, res) => {
-    res.render('bannerAd', {
-        imageSrc: '/banner.jpeg' 
-    });
-});
-
-const userRoutes = require("./routes/route");
-
-mongoose.connect(dbURI)
-    .then(() => console.log('Database connected successfully'))
-    .catch((err) => console.error('Database connection error:', err));
-
+const { engine } = require('express-handlebars');
 
 const redisClient = redis.createClient({
     password: 'H5PDBY74Evo9khdv81GVuB1rDpT9CFDz',
@@ -57,34 +28,53 @@ redisClient.on('error', err => console.log('Redis Client Error', err));
 
 redisClient.connect().then(() => {
     const app = express();
-    app.use(cors());
-    app.use(express.json());
 
+    // Cors setup
+    app.use(cors({
+        origin: 'http://feedback-arcade.s3-website.us-east-2.amazonaws.com'  
+    }));
+    
+    // Middlewares
     app.use(helmet());
     app.use(compression());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
 
+    // Session handling
     app.use(session({
         key: 'sessionid',
-        store: new RedisStore({ client: redisClient, }),
+        store: new RedisStore({ client: redisClient }),
         secret: 'GameStore',
         resave: false,
         saveUninitialized: false,
     }));
 
-    app.use("/api", userRoutes);
+    // Handlebars setup
+    app.engine('handlebars', engine({ defaultLayout: '' }));
+    app.set('view engine', 'handlebars');
+    app.set('views', path.join(__dirname, 'views'));
 
+    // Serve static files
+    app.use(express.static(path.join(__dirname, 'public')));
 
-    app.listen(port, (err) => {
-        if (err) {
-            throw err;
-        }
-        console.log(`Listening on port ${port}`);
+    // Routes
+    app.get('/banner', (req, res) => {
+        res.render('bannerAd', { imageSrc: '/banner.jpeg' });
     });
 
+    // Other routes here
+    const userRoutes = require("./routes/route");
+    app.use("/api", userRoutes);
+
+    // Start the server
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
+    });
+
+    // Connect to MongoDB
+    mongoose.connect(dbURI)
+        .then(() => console.log('Database connected successfully'))
+        .catch((err) => console.error('Database connection error:', err));
+}).catch((err) => {
+    console.error('Failed to connect to Redis:', err);
 });
-
-
-
-
