@@ -98,6 +98,11 @@ redisClient.connect().then(() => {
     const userRoutes = require("./routes/route");
     app.use("/api", userRoutes);
 
+    // Middleware for 404 Not Found
+    app.use((req, res, next) => {
+    res.status(404).send('Page Not Found');
+    makeEslintHappy(next);
+    });
     // Start the server
     app.listen(port, () => {
         console.log(`Server is running on port ${port}`);
