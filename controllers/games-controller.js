@@ -1,6 +1,5 @@
 const Game = require('../models/games-schema');
 
-
 const addGame = async (req, res) => {
     console.log("In add game")
     const { title, genre, image, description } = req.body;
@@ -102,7 +101,6 @@ module.exports = addGameReview;
 
 module.exports = {
     addGame,
-    getGames,
     getGames,
     deleteGame,
     getSingleGame,
