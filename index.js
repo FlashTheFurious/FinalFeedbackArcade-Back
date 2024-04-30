@@ -72,7 +72,12 @@ redisClient.connect().then(() => {
     app.use('/static', express.static('public'));
 
     // Serve static files
-    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(__dirname, 'public'), {
+        setHeaders: (res, path, stat) => {
+            res.set('Access-Control-Allow-Origin', '*');
+            res.set('Cross-Origin-Resource-Policy', 'cross-origin');
+        }
+    }));
 
     //console.log("Right before banner");
     // Routes  ----- JUST added "/api" as a prefix to the route below to test the change.
