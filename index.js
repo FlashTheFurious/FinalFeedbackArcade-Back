@@ -13,7 +13,12 @@ const port = 5020;
 // const dbURI = process.env.MONGODB_URI;
 const dbURI = "mongodb+srv://tarnav:Flashtf@simplemodel.ubnc1gf.mongodb.net/FeedbackArcade";
 
-//Handlebars server implementation
+const exphbs = require('express-handlebars');
+
+// Initialize the express application
+const app = express();
+
+// Handlebars server implementation
 app.use(cors({
     origin: 'http://feedback-arcade.s3-website.us-east-2.amazonaws.com'  
 }));
@@ -23,7 +28,7 @@ app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
-// Serve static files from public directory ( Only being used for handlebars )
+// Serve static files from public directory (only being used for handlebars)
 app.use(express.static('public'));
 
 app.get('/banner', (req, res) => {
@@ -31,7 +36,6 @@ app.get('/banner', (req, res) => {
         imageSrc: '/banner.jpeg' 
     });
 });
-
 
 const userRoutes = require("./routes/route");
 
