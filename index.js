@@ -37,7 +37,7 @@ redisClient.connect().then(() => {
     */
 
     app.use(cors());
-    
+
     // Middlewares
     app.use(helmet());
     app.use(compression());
@@ -61,8 +61,9 @@ redisClient.connect().then(() => {
     // Serve static files
     app.use(express.static(path.join(__dirname, 'public')));
 
-    // Routes
-    app.get('/banner', (req, res) => {
+    //console.log("Right before banner");
+    // Routes  ----- JUST added "/api" as a prefix to the route below to test the change.
+    app.get('/api/banner', (req, res) => {
         res.render('bannerAd', { imageSrc: '/banner.jpeg' });
     });
 
