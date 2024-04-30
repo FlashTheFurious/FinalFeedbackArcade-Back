@@ -29,10 +29,14 @@ redisClient.on('error', err => console.log('Redis Client Error', err));
 redisClient.connect().then(() => {
     const app = express();
 
-    // Cors setup
+    // Cors setup - WAS A PROBLEM
+    /*
     app.use(cors({
         origin: 'http://feedback-arcade.s3-website.us-east-2.amazonaws.com'  
     }));
+    */
+
+    app.use(cors());
     
     // Middlewares
     app.use(helmet());
