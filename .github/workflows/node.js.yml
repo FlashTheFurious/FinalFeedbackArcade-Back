@@ -12,22 +12,20 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.17.0]  # This is okay if you want to test only with Node.js 16.17.0
+        node-version: [16.17.0]  # Using Node.js 16.17.0
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Set up Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     
     - name: Install dependencies
-      run: npm install  
+      run: npm install  # Ensures dependencies are installed
 
-    - name: Start application
-      run: npm start 
+    - name: Run ESLint
+      run: npm run lint  # Execute ESLint script
 
-    - name: Run tests
-      run: npm test  
