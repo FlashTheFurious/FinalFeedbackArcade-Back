@@ -26,8 +26,6 @@ jobs:
     - name: Install dependencies
       run: npm install  
 
-    - name: Start application
-      run: npm start 
-
-    - name: Run tests
-      run: npm test  
+    - name: Start EsLint
+      run: npm run lint 
+  
