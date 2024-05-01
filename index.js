@@ -22,11 +22,7 @@ function makeEslintHappy(formalityVariable){
 }
 
 const redisClient = redis.createClient({
-    password: 'H5PDBY74Evo9khdv81GVuB1rDpT9CFDz',
-    socket: {
-        host: 'redis-14955.c241.us-east-1-4.ec2.redns.redis-cloud.com',
-        port: 14955
-    }
+    url:"redis://default:CDvxaAEdapf7aI2LqJx8L9okB7slAMmk@redis-10505.c11.us-east-1-2.ec2.cloud.redislabs.com:10505"
 });
 
 redisClient.on('error', err => console.log('Redis Client Error', err));
