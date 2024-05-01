@@ -8,16 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://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@github.com/Tauqeer-Rao/PortfolioTemplate-BE.git"
-  },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Tauqeer-Rao/PortfolioTemplate-BE/issues"
-  },
-  "homepage": "https://github.com/Tauqeer-Rao/PortfolioTemplate-BE#readme",
   "devDependencies": {
     "@babel/core": "^7.24.4",
     "@babel/preset-env": "^7.24.4",
