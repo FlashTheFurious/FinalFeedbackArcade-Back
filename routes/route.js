@@ -11,7 +11,7 @@ router.post('/register', userController.register);
 router.get('/games', gamesController.getGames);
 router.get('/games/:id', gamesController.getSingleGame);
 router.post('/games', gamesController.addGame);
-router.put('/games/:id', gamesController.addGameReview);
+router.post('/games/:id/reviews', gamesController.addGameReview);
 router.delete('/games/:id', gamesController.deleteGame);
 //router.get('/games/search', gamesController.searchGames);
 router.post('/user/find', userController.validateUser);
