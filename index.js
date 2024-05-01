@@ -11,8 +11,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 // const port = process.env.PORT || process.env.NODE_PORT || 5020;
 const port = 5020;
-// const dbURI = process.env.MONGODB_URI;
-const dbURI = "mongodb+srv://tarnav:Flashtf@simplemodel.ubnc1gf.mongodb.net/FeedbackArcade";
+ const dbURI = process.env.MONGODB_URI;
+//const dbURI = "mongodb+srv://tarnav:Flashtf@simplemodel.ubnc1gf.mongodb.net/FeedbackArcade";
 const { engine } = require('express-handlebars');
 
 let eslintHappyCounter = 0;
